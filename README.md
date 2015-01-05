@@ -2,6 +2,8 @@
 
 *by Greg Schoppe ([gschoppe.com](http://gschoppe.com))*
 
+Demo: [gschoppe.com/projects/jQuery.smartCrop](http://gschoppe.com/projects/jQuery.smartCrop)
+
 jQuery plugin enabling client-side responsive image rendering.  Just define widths and heights for image files, using responsive CSS, and SmartCrop will resize and crop the image to best match the defined size.
 
 **Important Note:** jQuery SmartCrop is currently a proof of concept.  Resource usage is currently very high, and the algorithms used are NOT yet optimized in ANY way.  **This plugin is NOT yet recommended for use in ANY production site**
