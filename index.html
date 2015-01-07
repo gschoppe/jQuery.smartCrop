@@ -4,25 +4,158 @@
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" ></script>
     <script type="text/javascript" src="jQuery.smartCrop.js"></script>
     <style>
-    img {
-        width: 1000px;
-        max-width: 100%;
-        height: 300px;
-    }
+        * {
+            box-sizing: border-box;
+        }
+        
+        .cf:before,
+        .cf:after {
+            content: " "; /* 1 */
+            display: table; /* 2 */
+        }
+
+        .cf:after {
+            clear: both;
+        }
+        
+        body {
+            background-color: #FFEECC;
+            margin: 0; padding: 0;
+            text-align: center;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        a {
+            color: #BC7642;
+        }
+        .band {
+            background-color: #BC7642;
+            box-shadow: 0 0 0 5px #BC7642;
+            border: 2px dashed #fff;
+            border-left: none;
+            border-right: none;
+        }
+        .wrapper {
+            margin: 0 auto;
+            width: 100%;
+            max-width: 960px;
+            text-align: left;
+            padding: 5px;
+        }
+        h1 {
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        #demo2 {
+            display: block;
+            margin: 0 auto 20px auto;
+            width: 600px;
+            max-width: 100%;
+            padding: 0px;
+            border: 1px solid #BC7642;
+            background-color: #d9c09e;
+            color: #000;
+            text-decoration: none;
+        }
+        #demo2 h3 {
+            margin: 3px;
+        }
+        #demo2 p {
+            margin: 5px;
+        }
+        #demo2 .image {
+            float: left;
+            margin-right: 10px;
+        }
+        #demo2 .image img {
+            width: 150px;
+            height: 150px;
+        }
+        @media (max-width: 527px) {
+            #demo2 .image img {
+                width: 75px;
+                height: 150px;
+            }
+        }
+        @media (max-width: 440px) {
+            #demo2 .image img {
+                width: 75px;
+                height: 180px;
+            }
+        }
+        @media (max-width: 380px) {
+            #demo2 h3 {
+                text-align: center;
+            }
+            #demo2 .image {
+                float: none;
+                width: 100%;
+                margin: 0;
+            }
+            #demo2 .image img {
+                width: 100%;
+                height: 85px;
+            }
+        }
     </style>
 </head>
 <body>
-    <h1>jQuery SmartCrop Demo</h1>
-    <i>by Greg Schoppe (<a href="http://gschoppe.com">gschoppe.com</a>)</i><br/>
-    <a href="http://github.com/gschoppe/jQuery.smartCrop">Fork Me on Github!</a>
-    <p>
-        jQuery plugin enabling client-side responsive image rendering.  Just define widths and heights for image files, using responsive CSS, and SmartCrop will resize and crop the image to best match the defined size.
-    </p><p>
-        <b>Important Note:</b> jQuery SmartCrop is currently a proof of concept.  Resource usage is currently very high, and the algorithms used are NOT yet optimized in ANY way.  <b>This plugin is NOT yet recommended for use in ANY production site</b>
-    </p><p>
-        (resize the window to see the responsive script in action)
-    </p>
-    <img src="test.jpg"/>
+    <div class="wrapper">
+        <center>
+            <h1>jQuery SmartCrop</h1>
+            <i>by Greg Schoppe (<a href="http://gschoppe.com">gschoppe.com</a>)</i><br/>
+            <a href="http://github.com/gschoppe/jQuery.smartCrop">Fork Me on Github!</a><br/><br/>
+        </center>
+    </div>
+    <div class="band">
+        <div class="wrapper">
+            <img src="test.jpg" style="opacity: 0.0;height:250px;width:100%;"/>
+        </div>
+    </div>
+    <div class="wrapper">
+        <p>
+            jQuery plugin enabling client-side responsive image rendering.  Just define widths and heights for image files, using responsive CSS, and SmartCrop will resize and crop the image to best match the defined size.
+        </p><p>
+            <b>Important Note:</b> jQuery SmartCrop is currently a proof of concept.  Resource usage is currently very high, and the algorithms used are NOT yet optimized in ANY way.  <b>This plugin is NOT yet recommended for use in ANY production site</b>
+        </p>
+        <center>
+            <b>(resize the window to see the responsive script in action)</b>
+        </center>
+        <center><h2>Advanced Demo</h2></center>
+        <a href="http://gschoppe.com" id="demo2" class="cf">
+            <div class="image">
+                <img src="avatar.jpg" data-focusx=".5" data-focusy=".25" style="opacity: 0.0;"/>
+            </div>
+            <div class="text">
+                <h3>Greg Schoppe</h3>
+                <p>
+                    Greg Schoppe is a web developer from Burlington, VT.  He studied Computer Science at
+                    Carnegie Mellon University, and has worked for Google, the US Marine Corps, and OSHA.
+                    In his spare time, Greg likes to play guitar, cook, and practice amateur photography.
+                </p>
+            </div>
+        </a>
+        <center>
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <!-- jQuery.smartCrop -->
+            <ins class="adsbygoogle"
+                 style="display:inline-block;width:336px;height:280px"
+                 data-ad-client="ca-pub-7854209247901003"
+                 data-ad-slot="4778040852"></ins>
+            <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+            <script>
+              (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+              (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+              })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+              ga('create', 'UA-38751106-1', 'auto');
+              ga('require', 'displayfeatures');
+              ga('send', 'pageview');
+            </script>
+        </center>
+    </div>
     <script type="text/javascript">
         $(document).ready(function() {
             $('img').smartCrop();

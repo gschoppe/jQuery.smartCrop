@@ -580,11 +580,13 @@
         }
         
         var processIMGHelper = function($img) {
-            var imgW    = $img.width();
-            var imgH    = $img.height();
-            var tempImg = $img.data("tempimg");
-            var initialW = tempImg.width;
-            var initialH = tempImg.height;
+            var imgW     = $img.width();
+            var imgH     = $img.height();
+            var nativeW  = $img.data("nativew");
+            var nativeH  = $img.data("nativeh");
+            var canvas   = Filters.getCanvas(nativeW, nativeH);
+            var context  = canvas.getContext('2d');
+            context.drawImage($img[0], 0, 0, nativeW, nativeH);
             if(typeof($img.data('maxreduce')) == "undefined")
                 $img.data('maxreduce', settings.maxReduce);
             if(!(typeof($img.data("focusx"))=='undefined' || typeof($img.data("focusy")=='undefined'))) {
@@ -597,37 +599,42 @@
                     partialFocus[0] = $img.data("focusx");
                 if(!(typeof($img.data("focusy"))=='undefined'))
                     partialFocus[1] = $img.data("focusy");
-                var canvas   = Filters.getCanvas(initialW, initialH);
-                var context  = canvas.getContext('2d');
-                context.drawImage(tempImg, 0, 0);
                 var focus = findPointOfInterest($img, canvas, partialFocus);
             }
             
             var density = 1;
             if(typeof(window.devicePixelRatio) != "undefined")
                 density = window.devicePixelRatio;
-            var ratio  = Math.min(Math.max(imgW/initialW, imgH/initialH, $img.data('maxreduce'))*density, 1);
-            var canvas = downScaleImage(tempImg, ratio);
+            var ratio  = Math.min(Math.max(imgW/nativeW, imgH/nativeH, $img.data('maxreduce'))*density, 1);
+            canvas = downScaleCanvas(canvas, ratio);
             if(settings.debug) {
-                canvas     = showPOI(canvas, focus);
+                canvas = showPOI(canvas, focus);
             }
-            canvas     = cropCanvas(canvas, imgW*density, imgH*density, focus);
-            $canvas    = $(canvas);
+            canvas  = cropCanvas(canvas, imgW*density, imgH*density, focus);
+            $canvas = $(canvas);
             $canvas.width(imgW);
             $canvas.height(imgH);
+            $canvas.addClass('smartCrop');
             $img.hide();
             $img.after($canvas);
         }
         
         var processIMG = function($img) {
+            $img.next('canvas.smartCrop').remove();
+            $img.show();
             var imgsrc = $img.attr('src');
-            if(typeof($img.data("tempimg"))!='undefined') {
+            if(typeof($img.data('nativew'))!='undefined' && typeof($img.data('nativeh'))!='undefined') {
                 processIMGHelper($img);
+            } else if(typeof($img[0].naturalWidth)!='undefined' && $img[0].naturalWidth 
+                   && typeof($img[0].naturalHeight)!='undefined' && $img[0].naturalHeight) {
+                $img.data('nativew', $img[0].naturalWidth);
+                $img.data('nativeh', $img[0].naturalHeight);
             } else {
                 var tempImg = new Image();
                 tempImg.crossOrigin='';
                 tempImg.onload = function() {
-                    $img.data('tempimg', tempImg);
+                    $img.data('nativew', tempImg.width);
+                    $img.data('nativeh', tempImg.height);
                     processIMGHelper($img);
                 };
                 tempImg.src=imgsrc;
@@ -635,12 +642,13 @@
         }
 
         return this.each(function() {
-            // this is where my code goes
             var $img = $(this);
+            
             processIMG($img);
+            $img.load(function() {
+                processIMG($(this));
+            });
             $(window).resize(function() {
-                $img.next('canvas').remove();
-                $img.show();
                 processIMG($img);
             });
         });
